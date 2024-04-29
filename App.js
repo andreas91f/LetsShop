@@ -13,7 +13,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Home" component={Home} options={{ title: 'PPushto App' }} />
+        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
         <Stack.Screen name="ListDetails" component={ListDetails} />
         <Stack.Screen name="ItemsDetails" component={ItemDetails} />
         <Stack.Screen name="Help" component={Help} />
