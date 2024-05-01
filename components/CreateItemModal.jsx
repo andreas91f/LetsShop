@@ -1,7 +1,7 @@
 import { Modal, Button, View, Text, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 
-export const CreateListModal = ({ modalVisible, setModalVisible, addListHandler }) => {
+export const CreateItemModal = ({ modalVisible, setModalVisible, addItemHandler }) => {
     const [text, setText] = useState("");
 
     // Function to reset text state when modal is closed
@@ -18,12 +18,12 @@ export const CreateListModal = ({ modalVisible, setModalVisible, addListHandler 
             onRequestClose={handleCloseModal}>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text>Create List</Text>
+                    <Text>Create Item</Text>
                     <TextInput
                         style={{ borderWidth: 0.5, paddingHorizontal: 3, marginVertical: 10 }}
                         onChangeText={setText}
                         value={text}
-                        placeholder="Enter list name"
+                        placeholder="Enter item name"
                     />
                     <View style={{ flexDirection: "row", justifyContent: "center", gap: 15, alignItems: "center" }}>
                         <Button
@@ -35,10 +35,9 @@ export const CreateListModal = ({ modalVisible, setModalVisible, addListHandler 
                             style={styles.button}
                             title="Create"
                             onPress={() => {
-                                addListHandler({
-                                    listName: text,
+                                addItemHandler({
+                                    itemName: text,
                                     completed: false,
-                                    items: []
                                 });
                                 handleCloseModal();
                             }}

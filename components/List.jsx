@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, Button, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-export const List = ({ listName, onDelete, onEdit, navigation }) => {
+export const List = ({ list, onDelete, onEdit }) => {
     const [completed, setCompleted] = useState(false);
 
     const handleComplete = () => {
@@ -10,8 +10,7 @@ export const List = ({ listName, onDelete, onEdit, navigation }) => {
     };
 
     const handleEdit = () => {
-        // Navigate to ListDetails page
-        navigation.navigate('ListDetails', { listName });
+        onEdit(list)
     };
 
     return (
@@ -21,8 +20,9 @@ export const List = ({ listName, onDelete, onEdit, navigation }) => {
             </Pressable>
             <View style={{ flex: 1, flexDirection: "row", gap: 10, justifyContent: "space-between" }}>
                 <Text style={{ color: "black" }}>
-                    {listName}
+                    {list.listName}
                 </Text>
+                <Text style={{ fontStyle: "italic" }}>{`${list.items.length} items`}</Text>
                 <View style={{ flexDirection: "row", gap: 35 }}>
                     <Pressable onPress={handleEdit}>
                         <AntDesign name="edit" size={24} color="black" />
