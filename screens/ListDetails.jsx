@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Button, Text } from 'react-native';
+import { View, StyleSheet, Button, Text, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CreateItemModal } from '../components/CreateItemModal';
 import { Item } from '../components/Item';
@@ -67,13 +67,23 @@ export const ListDetails = ({ route, navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <CreateItemModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
                 addItemHandler={addItemHandler}
             />
-            <Text style={styles.listName}>{list?.listName}</Text>
+            <View style={styles.titleContainer}>
+                <Text style={styles.listName}>{list?.listName}</Text>
+
+                <View style={styles.addButtonContainer}>
+                    <Button
+                        title="Add Item"
+                        onPress={() => setModalVisible(true)}
+                    />
+                </View>
+            </View>
+
             {items?.map((item, index) => (
                 <Item
                     key={index}
@@ -83,27 +93,26 @@ export const ListDetails = ({ route, navigation }) => {
                     updateCompleteStatusOfItem={updateCompleteStatusOfItem}
                 />
             ))}
-            <View style={styles.addButtonContainer}>
-                <Button
-                    title="Add Item"
-                    onPress={() => setModalVisible(true)}
-                    disabled={items.length >= 10}
-                />
-            </View>
-        </View>
+
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
+        paddingHorizontal: 20,
         backgroundColor: '#fff',
+    },
+    titleContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 10
     },
     listName: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 10,
     },
     addButtonContainer: {
         alignItems: 'center',

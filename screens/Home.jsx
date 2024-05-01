@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, Button, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Button, Text, ScrollView } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { List } from '../components/List';
 import { CreateListModal } from '../components/CreateListModal';
@@ -124,22 +124,22 @@ export const Home = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.helpContainer}>
-                <Image
-                    source={require('../assets/images/logo.jpg')}
-                    style={styles.logo}
-                />
-                <Pressable onPress={handleHelp}>
-                    <AntDesign name="question" size={24} color="green" />
-                </Pressable>
-            </View>
             <CreateListModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
                 addListHandler={addListHandler}
             />
-            <View style={{ backgroundColor: "grey", width: "100%", flex: 1 }}>
-                <Text style={{ padding: 5 }}>Your lists</Text>
+            <View style={styles.titleContainer}>
+                <Text >Your lists</Text>
+                <View style={styles.createButtonContainer}>
+                    <Button
+                        title="Create list"
+                        onPress={() => setModalVisible(true)}
+                    />
+                </View>
+            </View>
+            <ScrollView style={{ backgroundColor: "white", width: "100%", flex: 1 }}>
+
                 {lists?.map((listObj, idx) =>
                     <List
                         key={`list_${idx}`}
@@ -151,15 +151,8 @@ export const Home = ({ navigation }) => {
                         updateCompleteStatusOfList={updateCompleteStatusOfList}
                     />)
                 }
-            </View>
+            </ScrollView>
 
-            <View style={{ flexDirection: "row", justifyContent: "center", gap: 20 }}>
-                <Button
-                    title="Create list"
-                    disabled={lists.length >= 10}
-                    onPress={() => setModalVisible(true)}
-                />
-            </View>
         </View>
     );
 };
@@ -170,18 +163,21 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: 'column',
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        backgroundColor: "white",
     },
-    helpContainer: {
+    titleContainer: {
         flexDirection: "row",
         alignItems: "center",
-        gap: 260,
+        justifyContent: "space-between",
+        marginBottom: 10,
+        width: "100%",
+        paddingHorizontal: 10
     },
-    logo: {
-        height: 50,
-        width: 50,
-        marginRight: 10,
-    },
+    createButtonContainer: {
+        alignItems: 'center',
+        marginTop: 20,
+    }
 });
 
 export default Home;

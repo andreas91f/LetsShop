@@ -33,6 +33,7 @@ export const CreateListModal = ({ modalVisible, setModalVisible, addListHandler 
                         />
                         <Button
                             style={styles.button}
+                            disabled={text.length === 0}
                             title="Create"
                             onPress={() => {
                                 addListHandler({
