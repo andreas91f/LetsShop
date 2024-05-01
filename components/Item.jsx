@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     completed: {
-        backgroundColor: "lightgreen"
+        backgroundColor: "#d8f5ce"
     }
 });

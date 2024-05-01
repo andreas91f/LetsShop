@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 export const List = ({ list, onDelete, onEdit, updateCompleteStatusOfList }) => {
 
+    /**
+     * Every time list.items update we want to check if all of the items have been completed
+     * and set the status of the list
+     */
+    useEffect(() => {
+        const allItemsCompleted = list.items.every(item => item.completed);
+        updateCompleteStatusOfList(allItemsCompleted, list)
+
+    }, [list.items])
+
     const handleEdit = () => {
         onEdit(list)
     };
 
+
+
     return (
         <View style={[styles.listContainer, list.completed ? styles.completed : null]}>
-            <Pressable onPress={() => updateCompleteStatusOfList(!list.completed, list)}>
-                <AntDesign name="checkcircleo" size={24} color="black" style={{ marginRight: 10 }} />
-            </Pressable>
+            <AntDesign name="checkcircleo" size={24} style={{ fontWeight: list.completed ? "bold" : "normal", marginRight: 10 }} />
+
             <View style={{ flex: 1, flexDirection: "row", gap: 10, justifyContent: "space-between" }}>
                 <Text style={{ color: "black" }}>
                     {list.listName}
@@ -42,6 +53,6 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     completed: {
-        backgroundColor: "lightgreen" // Change background color to when the list is completed
+        backgroundColor: "#d8f5ce" // Change background color to when the list is completed
     }
 });
