@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Button, Text, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CreateItemModal } from '../components/CreateItemModal';
 import { Item } from '../components/Item';
 
+/**
+ * List details screen
+ * Renders a scrollable list of items
+ * Users can add/remove items from a list
+ */
 export const ListDetails = ({ route, navigation }) => {
     const { list, saveItems } = route.params;
     const [items, setItems] = useState([]);
@@ -51,6 +55,11 @@ export const ListDetails = ({ route, navigation }) => {
             console.error('Error deleting item:', error);
         }
     };
+
+    /**
+     * Function for updating the completed status of an item for the current list
+     * in Async storage and state
+     */
     const updateCompleteStatusOfItem = async (completedStatus, item) => {
         // Find the index of the item in the items array
         const itemIndex = items?.findIndex(i => i === item);
@@ -67,7 +76,7 @@ export const ListDetails = ({ route, navigation }) => {
     };
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <CreateItemModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
@@ -78,23 +87,24 @@ export const ListDetails = ({ route, navigation }) => {
 
                 <View style={styles.addButtonContainer}>
                     <Button
-                        title="Add Item"
+                        title="Create Item"
                         onPress={() => setModalVisible(true)}
                     />
                 </View>
             </View>
+            <ScrollView>
+                {items?.map((item, index) => (
+                    <Item
+                        key={index}
+                        item={item} // Pass item prop
+                        onDelete={() => deleteItemHandler(index)}
+                        navigation={navigation} // Pass navigation prop
+                        updateCompleteStatusOfItem={updateCompleteStatusOfItem}
+                    />
+                ))}
+            </ScrollView>
 
-            {items?.map((item, index) => (
-                <Item
-                    key={index}
-                    item={item} // Pass item prop
-                    onDelete={() => deleteItemHandler(index)}
-                    navigation={navigation} // Pass navigation prop
-                    updateCompleteStatusOfItem={updateCompleteStatusOfItem}
-                />
-            ))}
-
-        </ScrollView>
+        </View>
     );
 };
 

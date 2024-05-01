@@ -3,8 +3,13 @@ import { View, StyleSheet, Button, Text, ScrollView } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { List } from '../components/List';
 import { CreateListModal } from '../components/CreateListModal';
-import { AntDesign } from '@expo/vector-icons';
 
+/**
+ * Home screen
+ * Main screen of the app
+ * Renders a scrollable list of shop lists
+ * Users can create/delete lists
+ */
 export const Home = ({ navigation }) => {
     const [lists, setLists] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
@@ -79,13 +84,8 @@ export const Home = ({ navigation }) => {
         }
     };
 
-    const handleHelp = () => {
-        // Navigate to Help page
-        navigation.navigate('Help');
-    };
-
     /**
-     * Function for saving items in AsyncStorage under the corresponding list
+     * Function for saving items in AsyncStorage under a specific list
      */
     const saveItems = async (updatedItems, list) => {
         try {
@@ -108,6 +108,10 @@ export const Home = ({ navigation }) => {
         }
     };
 
+    /**
+     * Function for updating the completed status of a specific list
+     * in Async storage and state
+     */
     const updateCompleteStatusOfList = async (completedStatus, list) => {
         // Find the index of the list in the lists array
         const listIndex = lists?.findIndex(l => l === list);
@@ -130,7 +134,7 @@ export const Home = ({ navigation }) => {
                 addListHandler={addListHandler}
             />
             <View style={styles.titleContainer}>
-                <Text >Your lists</Text>
+                <Text style={{ fontSize: 20, fontWeight: "bold" }}>{`Your lists (${lists.length})`}</Text>
                 <View style={styles.createButtonContainer}>
                     <Button
                         title="Create list"

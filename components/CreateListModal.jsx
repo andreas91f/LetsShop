@@ -1,6 +1,9 @@
 import { Modal, Button, View, Text, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 
+/**
+ * Modal for creating a list
+ */
 export const CreateListModal = ({ modalVisible, setModalVisible, addListHandler }) => {
     const [text, setText] = useState("");
 
@@ -20,7 +23,7 @@ export const CreateListModal = ({ modalVisible, setModalVisible, addListHandler 
                 <View style={styles.modalView}>
                     <Text>Create List</Text>
                     <TextInput
-                        style={{ borderWidth: 0.5, paddingHorizontal: 3, marginVertical: 10 }}
+                        style={styles.textInput}
                         onChangeText={setText}
                         value={text}
                         placeholder="Enter list name"
@@ -33,7 +36,7 @@ export const CreateListModal = ({ modalVisible, setModalVisible, addListHandler 
                         />
                         <Button
                             style={styles.button}
-                            disabled={text.length === 0}
+                            disabled={text.length === 0} // disable if text is empty
                             title="Create"
                             onPress={() => {
                                 addListHandler({
@@ -76,5 +79,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
+    },
+    textInput: {
+        borderWidth: 0.5,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        marginVertical: 10,
+        borderRadius: 10,
+        borderColor: "gray"
     }
 });

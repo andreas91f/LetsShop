@@ -1,6 +1,9 @@
 import { Modal, Button, View, Text, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 
+/**
+ * Modal for creating an item
+ */
 export const CreateItemModal = ({ modalVisible, setModalVisible, addItemHandler }) => {
     const [text, setText] = useState("");
 
@@ -20,7 +23,7 @@ export const CreateItemModal = ({ modalVisible, setModalVisible, addItemHandler 
                 <View style={styles.modalView}>
                     <Text>Create Item</Text>
                     <TextInput
-                        style={{ borderWidth: 0.5, paddingHorizontal: 3, marginVertical: 10 }}
+                        style={styles.textInput}
                         onChangeText={setText}
                         value={text}
                         placeholder="Enter item name"
@@ -33,7 +36,7 @@ export const CreateItemModal = ({ modalVisible, setModalVisible, addItemHandler 
                         />
                         <Button
                             style={styles.button}
-                            disabled={text.length === 0}
+                            disabled={text.length === 0} // disable if text is empty
                             title="Create"
                             onPress={() => {
                                 addItemHandler({
@@ -75,5 +78,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
+    },
+    textInput: {
+        borderWidth: 0.5,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        marginVertical: 10,
+        borderRadius: 10,
+        borderColor: "gray"
     }
 });

@@ -2,6 +2,9 @@ import React from 'react';
 import { View, Text, Pressable, Button, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
+/**
+ * Item component
+ */
 export const Item = ({ item, onDelete, navigation, updateCompleteStatusOfItem }) => {
     const handleEdit = () => {
         // Navigate to itemDetails page
@@ -13,13 +16,13 @@ export const Item = ({ item, onDelete, navigation, updateCompleteStatusOfItem })
             <Pressable onPress={() => updateCompleteStatusOfItem(!item.completed, item)}>
                 <AntDesign name="checkcircleo" size={24} color="black" style={{ marginRight: 10 }} />
             </Pressable>
-            <View style={{ flex: 1, flexDirection: "row", gap: 10, justifyContent: "space-between" }}>
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", margin: 4 }}>
                 <Text style={{ color: "black" }}>
                     {item.itemName}
                 </Text>
-                <View style={{ flexDirection: "row", gap: 35 }}>
+                <View style={{ flexDirection: "row", gap: 10 }}>
                     <Pressable onPress={handleEdit}>
-                        <AntDesign name="edit" size={24} color="black" />
+                        <AntDesign name="infocirlceo" size={24} color="black" />
                     </Pressable>
                     <Pressable onPress={onDelete}>
                         <AntDesign name="delete" size={24} color="black" />
@@ -35,10 +38,12 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingHorizontal: 20,
-        paddingVertical: 5,
-        margin: 5,
-        alignItems: "center"
+        padding: 5,
+        alignItems: "center",
+        borderColor: "black",
+        borderWidth: 1,
+        borderRadius: 10,
+        marginBottom: 10
     },
     completed: {
         backgroundColor: "#d8f5ce"

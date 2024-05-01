@@ -2,6 +2,10 @@ import { Text, View, Image } from 'react-native';
 import { useEffect, useState } from 'react';
 import axios from "axios"
 
+/**
+ * Item details screen
+ * Fetches a photo for an item using the Unsplash Api
+ */
 export const ItemDetails = ({ route }) => {
     const { itemName } = route.params;
     // Set a loading state
@@ -23,7 +27,7 @@ export const ItemDetails = ({ route }) => {
             setFetchingDetails(true);
             // Request a photo from unsplash
             const response = await axios.get(`https://api.unsplash.com/search/photos?query=${itemName}&client_id=1yMR4wn5loe-ZHlYgNDcVeU8bnUARdq26H3jDi25fOE`);
-            if (response.data.results) {
+            if (response.data.results.length && response.data.results[0].urls && response.data.results[0].urls.small) {
                 // Get the small url of the first result
                 setPhotoUrl(response.data.results[0].urls.small);
                 // Set fetching to false

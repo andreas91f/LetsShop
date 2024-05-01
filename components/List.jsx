@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
+/**
+ * List component
+ */
 export const List = ({ list, onDelete, onEdit, updateCompleteStatusOfList }) => {
-
     /**
      * Every time list.items update we want to check if all of the items have been completed
-     * and set the status of the list
+     * and update the completed status of the list
      */
     useEffect(() => {
-        const allItemsCompleted = list.items.every(item => item.completed);
+        const allItemsCompleted = list.items.length !== 0 ? list.items.every(item => item.completed) : false;
         updateCompleteStatusOfList(allItemsCompleted, list)
 
     }, [list.items])
@@ -24,12 +26,12 @@ export const List = ({ list, onDelete, onEdit, updateCompleteStatusOfList }) => 
         <View style={[styles.listContainer, list.completed ? styles.completed : null]}>
             <AntDesign name="checkcircleo" size={24} style={{ fontWeight: list.completed ? "bold" : "normal", marginRight: 10 }} />
 
-            <View style={{ flex: 1, flexDirection: "row", gap: 10, justifyContent: "space-between" }}>
+            <View style={{ flex: 1, flexDirection: "row", gap: 10, justifyContent: "space-between", margin: 4 }}>
                 <Text style={{ color: "black" }}>
                     {list.listName}
                 </Text>
                 <Text style={{ fontStyle: "italic" }}>{`${list.items.length} items`}</Text>
-                <View style={{ flexDirection: "row", gap: 35 }}>
+                <View style={{ flexDirection: "row", gap: 10 }}>
                     <Pressable onPress={handleEdit}>
                         <AntDesign name="edit" size={24} color="black" />
                     </Pressable>
@@ -50,7 +52,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 5,
         margin: 5,
-        alignItems: "center"
+        alignItems: "center",
+        borderColor: "black",
+        borderWidth: 1,
+        borderRadius: 10,
+        marginBottom: 5
     },
     completed: {
         backgroundColor: "#d8f5ce" // Change background color to when the list is completed
