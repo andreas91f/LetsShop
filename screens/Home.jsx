@@ -134,7 +134,7 @@ export const Home = ({ navigation }) => {
                 addListHandler={addListHandler}
             />
             <View style={styles.titleContainer}>
-                <Text style={{ fontSize: 20, fontWeight: "bold" }}>{`Your lists (${lists.length})`}</Text>
+                <Text style={{ fontSize: 20, fontWeight: "bold" }}>{`Your lists ${lists.length ? `(${lists.length})` : ""} `}</Text>
                 <View style={styles.createButtonContainer}>
                     <Button
                         title="Create list"
@@ -142,20 +142,22 @@ export const Home = ({ navigation }) => {
                     />
                 </View>
             </View>
-            <ScrollView style={{ backgroundColor: "white", width: "100%", flex: 1 }}>
+            {lists.length ?
+                <ScrollView style={{ backgroundColor: "white", width: "100%", flex: 1 }}>
+                    {lists.map((listObj, idx) =>
+                        <List
+                            key={`list_${idx}`}
+                            list={listObj}
+                            onDelete={() => deleteListHandler(idx)} // Call deleteListHandler with the list idx
+                            onEdit={() => {
+                                navigation.navigate("ListDetails", { list: listObj, saveItems });
+                            }}
+                            updateCompleteStatusOfList={updateCompleteStatusOfList}
+                        />)
+                    }
+                </ScrollView> :
+                <Text style={{ fontStyle: "italic", alignSelf: "center", flex: 1 }}>No lists yet</Text>}
 
-                {lists?.map((listObj, idx) =>
-                    <List
-                        key={`list_${idx}`}
-                        list={listObj}
-                        onDelete={() => deleteListHandler(idx)} // Call deleteListHandler with the list idx
-                        onEdit={() => {
-                            navigation.navigate("ListDetails", { list: listObj, saveItems });
-                        }}
-                        updateCompleteStatusOfList={updateCompleteStatusOfList}
-                    />)
-                }
-            </ScrollView>
 
         </View>
     );
