@@ -35,7 +35,6 @@ export const Home = ({ navigation }) => {
      * Function for saving lists in async storage
      */
     const saveLists = async (updatedLists) => {
-        console.warn("in saveLists", updatedLists)
         try {
             // Convert updated lists to JSON and save in AsyncStorage
             await AsyncStorage.setItem('lists', JSON.stringify(updatedLists));
@@ -109,6 +108,20 @@ export const Home = ({ navigation }) => {
         }
     };
 
+    const updateCompleteStatusOfList = async (completedStatus, list) => {
+        // Find the index of the list in the lists array
+        const listIndex = lists?.findIndex(l => l === list);
+        if (listIndex !== -1) {
+            // Get a copy of the current array of lists
+            const updatedLists = [...lists];
+            // Update the complete value of the specific list
+            updatedLists[listIndex].completed = completedStatus;
+            // Save the updpated lists in AsyncStorage & state
+            await saveLists(updatedLists);
+            setLists(updatedLists);
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.helpContainer}>
@@ -135,6 +148,7 @@ export const Home = ({ navigation }) => {
                         onEdit={() => {
                             navigation.navigate("ListDetails", { list: listObj, saveItems });
                         }}
+                        updateCompleteStatusOfList={updateCompleteStatusOfList}
                     />)
                 }
             </View>

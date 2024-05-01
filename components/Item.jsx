@@ -1,27 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Pressable, Button, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-export const Item = ({ itemName, onDelete, onEdit, navigation }) => {
-    const [completed, setCompleted] = useState(false);
-
-    const handleComplete = () => {
-        setCompleted(!completed);
-    };
-
+export const Item = ({ item, onDelete, navigation, updateCompleteStatusOfItem }) => {
     const handleEdit = () => {
         // Navigate to itemDetails page
-        navigation.navigate('ItemDetails', { itemName });
+        navigation.navigate('ItemDetails', { itemName: item.itemName });
     };
 
     return (
-        <View style={[styles.itemContainer, completed ? styles.completed : null]}>
-            <Pressable onPress={handleComplete}>
+        <View style={[styles.itemContainer, item.completed ? styles.completed : null]}>
+            <Pressable onPress={() => updateCompleteStatusOfItem(!item.completed, item)}>
                 <AntDesign name="checkcircleo" size={24} color="black" style={{ marginRight: 10 }} />
             </Pressable>
             <View style={{ flex: 1, flexDirection: "row", gap: 10, justifyContent: "space-between" }}>
                 <Text style={{ color: "black" }}>
-                    {itemName}
+                    {item.itemName}
                 </Text>
                 <View style={{ flexDirection: "row", gap: 35 }}>
                     <Pressable onPress={handleEdit}>

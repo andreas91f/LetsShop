@@ -2,20 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-export const List = ({ list, onDelete, onEdit }) => {
-    const [completed, setCompleted] = useState(false);
-
-    const handleComplete = () => {
-        setCompleted(!completed);
-    };
+export const List = ({ list, onDelete, onEdit, updateCompleteStatusOfList }) => {
 
     const handleEdit = () => {
         onEdit(list)
     };
 
     return (
-        <View style={[styles.listContainer, completed ? styles.completed : null]}>
-            <Pressable onPress={handleComplete}>
+        <View style={[styles.listContainer, list.completed ? styles.completed : null]}>
+            <Pressable onPress={() => updateCompleteStatusOfList(!list.completed, list)}>
                 <AntDesign name="checkcircleo" size={24} color="black" style={{ marginRight: 10 }} />
             </Pressable>
             <View style={{ flex: 1, flexDirection: "row", gap: 10, justifyContent: "space-between" }}>

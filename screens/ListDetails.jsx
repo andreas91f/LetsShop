@@ -51,6 +51,20 @@ export const ListDetails = ({ route, navigation }) => {
             console.error('Error deleting item:', error);
         }
     };
+    const updateCompleteStatusOfItem = async (completedStatus, item) => {
+        // Find the index of the item in the items array
+        const itemIndex = items?.findIndex(i => i === item);
+        if (itemIndex !== -1) {
+            // Get a copy of the current array of items
+            const updatedItems = [...items];
+            // Updated the completed value of the specific item
+            updatedItems[itemIndex].completed = completedStatus;
+            // Save the updated items in Async Storage & state
+            await saveItems(updatedItems, list);
+            setItems(updatedItems);
+        }
+
+    };
 
     return (
         <View style={styles.container}>
@@ -63,9 +77,10 @@ export const ListDetails = ({ route, navigation }) => {
             {items?.map((item, index) => (
                 <Item
                     key={index}
-                    itemName={item.itemName} // Pass itemName prop
+                    item={item} // Pass item prop
                     onDelete={() => deleteItemHandler(index)}
                     navigation={navigation} // Pass navigation prop
+                    updateCompleteStatusOfItem={updateCompleteStatusOfItem}
                 />
             ))}
             <View style={styles.addButtonContainer}>
