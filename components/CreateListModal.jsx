@@ -10,8 +10,10 @@ export const CreateListModal = ({ modalVisible, setModalVisible, addListHandler 
     // Function to reset text state when modal is closed
     const handleCloseModal = () => {
         setText(""); // Reset text state to empty string
-        setModalVisible(false); // Close the modal
+        setModalVisible(false); // Close the modal      
     };
+
+
 
     return (
         <Modal

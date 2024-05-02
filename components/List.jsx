@@ -30,7 +30,7 @@ export const List = ({ list, onDelete, onEdit, updateCompleteStatusOfList }) => 
                 <Text style={{ color: "black" }}>
                     {list.listName}
                 </Text>
-                <Text style={{ fontStyle: "italic" }}>{`${list.items.length} items`}</Text>
+                <Text style={{ fontStyle: "italic" }}>{`${list.items.length} item${list.items.length !== 1 ? "s" : ""}`}</Text>
                 <View style={{ flexDirection: "row", gap: 10 }}>
                     <Pressable onPress={handleEdit}>
                         <AntDesign name="edit" size={24} color="black" />
